@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "890281917155",
+    "firebase_url": "https://wellcome-ec07c-default-rtdb.firebaseio.com",
+    "project_id": "wellcome-ec07c",
+    "storage_bucket": "wellcome-ec07c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890281917155:android:a29ab0195d9621f4b0e3d6",
+        "android_client_info": {
+          "package_name": "com.example.howru"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "890281917155-prn61a2n755oarlnapf7j5k72q9o34ab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIiHPgzke07KGd6uYrX_e49y7PDq12Slc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "890281917155-prn61a2n755oarlnapf7j5k72q9o34ab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
