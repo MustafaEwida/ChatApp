@@ -11,6 +11,7 @@ appBarTheme:const AppBarTheme(
   backgroundColor:  Color.fromARGB(255, 118, 124, 181),
   textTheme: TextTheme(headline6: TextStyle(color:Color.fromARGB(255, 118, 124, 181),fontSize: 20 )) 
 ),
+
 elevatedButtonTheme: ElevatedButtonThemeData(style: ElevatedButton.styleFrom(
   
   shape: RoundedRectangleBorder(

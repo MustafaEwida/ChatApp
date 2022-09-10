@@ -5,14 +5,7 @@ import 'package:howru/screens/Contect.dart';
 import 'package:howru/screens/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Home extends StatefulWidget {
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-
-
+class Home extends StatelessWidget {
  
   @override
   Widget build(BuildContext context) {

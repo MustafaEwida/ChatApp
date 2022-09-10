@@ -2,13 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:howru/helpers/InterNetChecker.dart';
 import 'package:howru/providers/apiprovider.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import 'package:provider/provider.dart';
 
 
 import '../helpers/Auth.dart';
-import '../nav.dart';
+import '../helpers/nav.dart';
 import '../screens/contectProfile.dart';
 
 class main_drwer extends StatelessWidget {
@@ -56,7 +58,13 @@ children: [
       ),
        child: ClipRRect(
         borderRadius: BorderRadius.circular(200),
-        child: FadeInImage.assetNetwork(placeholder: 'assets/holder.png',image: user!.imgurl!,fit: BoxFit.cover,)),
+        child:StreamBuilder(
+          stream: InternetChecker.DrwerInternetchecker.onStatusChange,
+     
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return snapshot.data==InternetConnectionStatus.disconnected? Image.asset('assets/holder.png',fit: BoxFit.cover,) :  FadeInImage.assetNetwork(placeholder: 'assets/holder.png',image: user!.imgurl!,fit: BoxFit.cover,);
+          },
+        ),),
      );
                 })),SizedBox(width: 10.w,),
                 Container(
@@ -80,9 +88,7 @@ children: [
           ListTile(leading: Icon(Icons.person_outlined),title: Text("Profile"),onTap: (){
           Nav.NavigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => Contect_profile(Auth_helper.auth_helper.user!))));
           },),
-           ListTile(leading: Icon(Icons.contact_phone_outlined),title: Text("Contects"),onTap: (){
-         Nav.NavigatorKey.currentState!.pushNamed('contect');
-          },),
+          
              ListTile(leading: Icon(Icons.add_box_sharp),title: Text("Add Friends"),onTap: (){
           
          Nav.NavigatorKey.currentState!.pushNamed('search');

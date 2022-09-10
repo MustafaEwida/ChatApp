@@ -28,7 +28,7 @@ class Messages extends StatelessWidget {
     return StreamBuilder<Response>(
         stream: getRandomNumberFact(context),
         builder: (context, AsyncSnapshot<Response<dynamic>> snapshot) {
-          if(snapshot.hasData){
+          if(snapshot.connectionState==ConnectionState.waiting){
           //  Provider.of<Api_provider>(context ,listen: false).lastmsgInList=null;
           }
           

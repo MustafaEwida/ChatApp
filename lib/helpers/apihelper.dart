@@ -16,6 +16,17 @@ class Api_Helper {
   final dio = Dio();
   final token = Auth_helper.auth_helper.Token;
   final user = Auth_helper.auth_helper.user;
+
+Future<Map<String, dynamic>>GitUserDataFromApi()async{
+final  path =
+          'https://wellcome-ec07c-default-rtdb.firebaseio.com/users/${ Auth_helper.auth_helper.user!.id}.json?auth=${Auth_helper.auth_helper.Token}';
+
+      final response = await dio.get(path);
+      print(response.data);
+      final Map<String, dynamic> information = response.data;
+      return information;
+
+  }
   Future<List<UserMdoel>> Recentusers() async {
     List<UserMdoel> users = [];
     final path =
@@ -58,13 +69,13 @@ class Api_Helper {
         
       },
     );
-    final usersdata = json.encode({
+ /*   final usersdata = json.encode({
       "users":users
     });
  final shp =await  SharedPreferences.getInstance();
  shp.setString("users", usersdata);
 //final respons = await dio.get(path);
-//final Map<String,dynamic> infor = response.data;
+//final Map<String,dynamic> infor = response.data;*/
     info.forEach(
       (key, value) {
        
@@ -229,7 +240,9 @@ if(responses.data==null){
     List<Msg_model> maga = [];
     final path =
         'https://wellcome-ec07c-default-rtdb.firebaseio.com/chats/${user!.id}/${contect_model.id}.json?auth=$token';
+      
     final res = await dio.get(path);
+
     Map<String, dynamic> msgs = res.data;
     msgs.forEach((key, value) {
       maga.add(Msg_model(
@@ -241,8 +254,12 @@ if(responses.data==null){
   Future<List<dynamic>> getlasymsg(Contect_Model contect_model) async {
     List<Msg_model> maga = [];
     final path =
-        'https://wellcome-ec07c-default-rtdb.firebaseio.com/chats/${user!.id}/${contect_model.id}.json?auth=$token';
+        'https://wellcome-ec07c-default-rtdb.firebaseio.com/chats/${Auth_helper.auth_helper.user!.id}/${contect_model.id}.json?auth=$token'; 
+         print(token);
+        print('${user!.id}');
+        print("${contect_model.id}");
     final res = await dio.get(path);
+    print(res.data);
     if (res.data == null) {
       return ['No chat,say hi', null, null];
     }

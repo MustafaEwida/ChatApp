@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:howru/helpers/localNotify.dart';
 import 'package:howru/models/contect.dart';
-import 'package:howru/nav.dart';
+import 'package:howru/helpers/nav.dart';
+import 'package:howru/providers/LogInProvider.dart';
 import 'package:howru/providers/Main_provider.dart';
 import 'package:howru/providers/apiprovider.dart';
 import 'package:howru/screens/Contect.dart';
 import 'package:howru/screens/Rest.dart';
+import 'package:howru/screens/Support.dart';
 import 'package:howru/screens/accept_friend_screen.dart';
 import 'package:howru/screens/add_img.dart';
 import 'package:howru/screens/contectProfile.dart';
@@ -36,8 +38,8 @@ void main() async {
   SP.setString("token","");
   runApp(MultiProvider(
     providers: [ChangeNotifierProvider(create: ((context) => Api_provider())),
-    ChangeNotifierProvider(create: ((context) => Main_Provider()))
-    
+    ChangeNotifierProvider(create: ((context) => Main_Provider())),
+    ChangeNotifierProvider(create: ((context) => LogIn_Provider()))
     ],
     child: MyApp(),
   ));
@@ -63,8 +65,8 @@ class MyApp extends StatelessWidget {
           'search': (context) => Search_screen(),
           'settings':(context) => Settings_screen(),
           "reset":(context) => Reset_screen(),
-          "email_r":(context) => Rsest_Email()
-         
+          "email_r":(context) => Rsest_Email(),
+         "support":(context) => Contact_screen(),
         },
         home: Home(),
       );

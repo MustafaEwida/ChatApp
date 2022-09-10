@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:howru/helpers/Auth.dart';
 import 'package:howru/models/contect.dart';
 import 'package:howru/models/user.dart';
-import 'package:howru/nav.dart';
+import 'package:howru/helpers/nav.dart';
 import 'package:howru/providers/apiprovider.dart';
 import 'package:howru/screens/chatscreen.dart';
 import 'package:howru/screens/contectProfile.dart';
@@ -20,12 +20,12 @@ class contect_widget extends StatefulWidget {
 
 class _contect_widgetState extends State<contect_widget> {
   bool isuser  = false;
-   bool nodata  = true;
+   bool isinit  = true;
   String msg = "message";
   List<dynamic>? data;
 DateTime? dateTime = DateTime.now();
   getlast()async{
-final value = await Provider.of<Api_provider>(context).lastmsg(widget.contect_model);
+final value = await Provider.of<Api_provider>(context,listen: false).lastmsg(widget.contect_model);
  data = value;
       
       isuser = value[2] == Auth_helper.auth_helper.user!.id;
@@ -38,10 +38,10 @@ final value = await Provider.of<Api_provider>(context).lastmsg(widget.contect_mo
   }
   @override
   void didChangeDependencies() {
-   if(nodata){
+   if(isinit){
  getlast();
    }
-   nodata = false;
+   isinit = false;
     super.didChangeDependencies();
   }
   @override

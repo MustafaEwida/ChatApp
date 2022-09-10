@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 
+import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:howru/helpers/Auth.dart';
@@ -10,6 +11,7 @@ import 'package:howru/models/contect.dart';
 import 'package:howru/models/user.dart';
 import 'package:http/http.dart';
 
+import '../models/ex.dart';
 import '../models/msgmodel.dart';
 
 class Api_provider extends ChangeNotifier {
@@ -20,10 +22,10 @@ List<String> usersnames = [];
  List<Msg_model> msgs = [];
  Msg_model? lastmsgInList ;
 Allusers()async{
-
- List <List<UserMdoel>> api_users =  await Api_Helper.api_helper.allusers();
-    
- users =api_users[0];
+users = [];
+try {
+   List <List<UserMdoel>> api_users =  await Api_Helper.api_helper.allusers();
+   users =api_users[0];
 users.forEach((element) {
   usersnames.add(element.name!);
 
@@ -32,6 +34,21 @@ users.removeWhere((element) => element.id==Auth_helper.auth_helper.user!.id);
  resentusers =api_users[1];
 resentusers.removeWhere((element) => element.id==Auth_helper.auth_helper.user!.id);
  notifyListeners();
+} on DioError catch (e) {
+     
+      if(e.response != null)  {
+        throw MyEx(e.response!.data['error']['message']);}
+        else if(e.message.contains("SocketException")){ 
+          users = [];
+      // throw SocketException("No connection,please try again");
+      }
+      
+      
+    } catch (e) {
+      throw e;
+}
+    
+ print(users);
 }/*
 resentUsers()async{
  List<UserMdoel> api_users =  await Api_Helper.api_helper.Recentusers();
@@ -54,16 +71,47 @@ notifyListeners();
 }
   getContects()async{
   
-List<Contect_Model> cts =  await Api_Helper.api_helper.GetContects();
+try {
+  List<Contect_Model> cts =  await Api_Helper.api_helper.GetContects();
 contects = cts;
 
 notifyListeners();
+}on DioError catch (e) {
+     
+      if(e.response != null)  {
+        throw MyEx(e.response!.data['error']['message']);}
+        else{ 
+        print(e.requestOptions);
+        print(e.message);
+        contects =[];
+        // throw SocketException("No connection,please try again");
+      }
+      
+      
+    } catch (e) {
+      throw e;
+}
 
 }
 addmsg(String msg , Contect_Model contect_model)async{
- await Api_Helper.api_helper.addmsg(msg,contect_model);
+ try {
+   await Api_Helper.api_helper.addmsg(msg,contect_model);
    lastmsgInList = null;
  notifyListeners();
+ } on DioError catch (e) {
+     
+      if(e.response != null)  {throw MyEx(e.response!.data['error']['message']);}else{ 
+        print(e.requestOptions);
+        print(e.message);
+         throw SocketException("No Connection,Please try agaian later");
+      }
+      
+      
+    }
+ 
+ 
+ catch (e) {
+ }
 
 }
 Future< List<Msg_model>>  getmsgs(Contect_Model contect_mode)async{
@@ -134,16 +182,44 @@ return b;
 
   }
   deleteContect( UserMdoel userMdoel , bool sure)async{
-await Api_Helper.api_helper.deletcontect(userMdoel, sure);
-await getContects()
+try {
+  await Api_Helper.api_helper.deletcontect(userMdoel, sure);
+await getContects();
 
+}on DioError catch(e){
+      if (e.response != null) {
+        print(e.response!.data);
+        throw MyEx(e.response!.data['error']['message']);
+      } else if(e.message.contains('SocketException')){
+        throw SocketException("No Connection,Please try agaian later");
+       
+      }else{
+        throw e;
+      }}
+       catch (e) {
+        throw e;
+}
 ;
 notifyListeners();
 
 
   }
   deleteChat(Contect_Model contect_model)async{
-    await Api_Helper.api_helper.deleteChat(contect_model);
+  try {
+      await Api_Helper.api_helper.deleteChat(contect_model);
+  }on DioError catch(e){
+      if (e.response != null) {
+        
+        throw MyEx(e.response!.data['error']['message']);
+      } else if(e.message.contains('SocketException')){
+        return;
+        throw SocketException("No Connection,Please try agaian later");
+       
+      }else{
+        throw e;
+      }} catch (e) {
+        throw e;
+  }
     notifyListeners();
 
   }
@@ -152,7 +228,7 @@ UserMdoel  getuserbyId(Contect_Model contect_model){
     return userMdoel;
   }
 
-bool  iscontect(UserMdoel userMdoel , Contect_Model? contect){
+List<dynamic> iscontect(UserMdoel userMdoel , Contect_Model? contect){
   bool isexist = false;
  List elemint = contects.where((element) {
      return element.id == userMdoel.id;
@@ -163,7 +239,7 @@ bool  iscontect(UserMdoel userMdoel , Contect_Model? contect){
     }else{
         isexist = false;
     }
-    return isexist;
+    return [isexist,contect];
 
  }
  updateimg(File b)async{

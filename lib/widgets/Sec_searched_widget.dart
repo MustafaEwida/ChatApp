@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:howru/models/user.dart';
-import 'package:howru/nav.dart';
+import 'package:howru/helpers/nav.dart';
 import 'package:howru/screens/contectProfile.dart';
 import 'package:provider/provider.dart';
 
@@ -112,31 +112,6 @@ actions:<Widget>[
     )
 
 
-/* Row(
-children: [Text(userMdoel.name!), IconButton(onPressed: (() async{
-      try {
-          await  Provider.of<Api_provider>(context,listen: false).addcontect(userMdoel);
-      } catch (e) {
-        
- showDialog(context: context, builder: (ctx){
-return AlertDialog(
-title: Text("Something Went wrong"),
-content: Text("Something Wrong,Try agian later"),
-actions:<Widget>[
-              FlatButton(
-                child: Text("Ok"),
-                onPressed: () {
-                  Navigator.of(ctx).pop();
-                },
-              )
-            ],
-
-);});
-      }
-  
-    }), icon:Icon( Icons.add))],
-
-),*/
 ),
 
   
