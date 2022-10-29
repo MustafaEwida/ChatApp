@@ -73,7 +73,7 @@ children: [
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                      Text(user!.name!,style: TextStyle(color: Colors.white),),
-                  FittedBox(child: Text(user!.email!,style: TextStyle(color: Colors.white)),) , 
+                  FittedBox(child: Text(user!.email!,style: TextStyle(color: Colors.white,fontSize: 10.sp)),) , 
                     ],
                   ),
                 )

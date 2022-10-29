@@ -255,11 +255,10 @@ if(responses.data==null){
     List<Msg_model> maga = [];
     final path =
         'https://wellcome-ec07c-default-rtdb.firebaseio.com/chats/${Auth_helper.auth_helper.user!.id}/${contect_model.id}.json?auth=$token'; 
-         print(token);
-        print('${user!.id}');
-        print("${contect_model.id}");
+         
+      
     final res = await dio.get(path);
-    print(res.data);
+  
     if (res.data == null) {
       return ['No chat,say hi', null, null];
     }

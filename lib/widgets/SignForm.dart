@@ -232,7 +232,9 @@ showDialog(
                               ),
                         ),
                       ),
-                      child: TextFormField(
+                      child: Consumer<LogIn_Provider>(builder: ((context, value, child) {
+                     return   TextFormField(
+                      obscureText: value.Isvisible,
                         controller: passcontrol,
                         validator: (val) {
                           if (val!.isEmpty) {
@@ -244,11 +246,16 @@ showDialog(
                           return null;
                         },
                         decoration: InputDecoration(
+                           suffixIcon: IconButton(onPressed: (){
+                                  value.showPassword(); 
+
+                          }, icon: Icon(Icons.remove_red_eye,color: Theme.of(context).accentColor,)),
                             border: InputBorder.none,
                             hintText: "Password",
                             hintStyle: TextStyle(
                                 color: Color.fromRGBO(49, 39, 79, 1))),
-                      ),
+                      );
+                      })),
                     ),
                     Container(
                       margin: EdgeInsets.only(
@@ -262,7 +269,9 @@ showDialog(
                           ),
                         ),
                       ),
-                      child: TextFormField(
+                      child: Consumer<LogIn_Provider>(builder: ((context, value, child) {
+                        return TextFormField(
+                          obscureText: value.Isvisible2,
                         onSaved: (newValue) {
                           userMdoel.password = newValue;
                         },
@@ -277,12 +286,17 @@ showDialog(
                           return null;
                         },
                         decoration: InputDecoration(
+                           suffixIcon: IconButton(onPressed: (){
+                                  value.showConformedPassword(); 
+
+                          }, icon: Icon(Icons.remove_red_eye,color: Theme.of(context).accentColor,)),
                           border: InputBorder.none,
                           hintText: "Conform password",
                           hintStyle:
                               TextStyle(color: Color.fromRGBO(49, 39, 79, 1)),
                         ),
-                      ),
+                      );
+                      })),
                     ),
                     SizedBox(
                       height: 10.0.h,

@@ -97,7 +97,7 @@ final value = await Provider.of<Api_provider>(context,listen: false).lastmsg(wid
       
           children: [
             
-         Expanded(child:    Text(msg)),
+         Expanded(child:    Text(msg,style: TextStyle(fontSize: 10.sp),)),
         if(data!=null)  Text(dateTime!=null?  DateFormat.Hm().format( dateTime!):""),
         if(data!=null) SizedBox(width: 5.w,),
           if(data!=null)  Text(dateTime!=null?  DateFormat.yMMMd().format(dateTime!):"")

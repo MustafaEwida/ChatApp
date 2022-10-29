@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -18,7 +19,9 @@ class ContectsList extends StatefulWidget {
 }
 
 class _ContectsListState extends State<ContectsList> {
+   Api_provider? provider;
 bool isinit = true;
+Timer? timer;
   @override
   /*GetContectsAndusers()async{
     try {
@@ -94,20 +97,29 @@ bool isinit = true;
       }
   }*/
   void didChangeDependencies() {
+   Api_provider provider = Provider.of<Api_provider>(context, listen: false);
+      
+         provider.getContects();
+      
+     
     
-        Provider.of<Api_provider>(context, listen: false).getContects();
-       Provider.of<Api_provider>(context, listen: false).Allusers();
-    
-    
+ provider.Allusers();
   
-   
+  
    
   }
   @override
+  void dispose() {
+    provider!.dispose();
+ 
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) { 
+    
     return  StreamBuilder(
       stream: InternetChecker.Internetchecker.onStatusChange,
-    
+    key: ValueKey(DateTime.now()),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
      
         print(Provider.of<Api_provider>(context,listen: false).contects);

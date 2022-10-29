@@ -192,7 +192,7 @@ showDialog(
                   Container(
                     margin: EdgeInsets.only(
                         bottom:
-                            keyboardHeight > 0 ? keyboardHeight - 150.h : 0),
+                            keyboardHeight > 0 ? keyboardHeight - (keyboardHeight*.80) : 0),
                     padding: EdgeInsets.all(10.sp),
                     decoration: const BoxDecoration(
                       border: Border(
@@ -201,7 +201,8 @@ showDialog(
                             ),
                       ),
                     ),
-                    child: TextFormField(
+                    child: Consumer<LogIn_Provider>(builder: ((context, provider, child) {
+                      return TextFormField(
                       onSaved: ((newValue) {
                         info[1] = newValue!;
                       }),
@@ -212,12 +213,18 @@ showDialog(
 
                         return null;
                       },
-                      decoration: const InputDecoration(
+                      obscureText: provider.Isvisible ,
+                      decoration:  InputDecoration(
+                         suffixIcon: IconButton(onPressed: (){
+                                  provider.showPassword(); 
+
+                          }, icon: Icon(Icons.remove_red_eye,color: Theme.of(context).accentColor,)),
                           border: InputBorder.none,
                           hintText: "Password",
                           hintStyle:
-                              TextStyle(color: Color.fromRGBO(49, 39, 79, 1))),
-                    ),
+                            const  TextStyle(color: Color.fromRGBO(49, 39, 79, 1))),
+                    );
+                    })),
                   ),
                   SizedBox(
                     height: 40.0.h,

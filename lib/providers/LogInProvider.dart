@@ -2,6 +2,19 @@ import 'package:flutter/cupertino.dart';
 
 class LogIn_Provider extends ChangeNotifier {
   bool isLog = false;
+  bool Isvisible = true;
+ bool Isvisible2 = true;
+showPassword(){
+Isvisible = !Isvisible;
+notifyListeners();
+
+}
+showConformedPassword(){
+Isvisible2 = !Isvisible2;
+notifyListeners();
+
+}
+
 
 ChangeIsLog(){
 isLog = !isLog;
